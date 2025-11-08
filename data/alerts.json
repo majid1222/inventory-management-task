@@ -1,0 +1,58 @@
+[
+  {
+    "id": "A-2025-11-08T07:15:25.055Z-9",
+    "productId": 9,
+    "sku": "P-200",
+    "productName": "Recycled Paper",
+    "reorderPoint": 200,
+    "totalStock": 190,
+    "category": "low",
+    "recommendedQty": 10,
+    "note": "Raise to RP (200)",
+    "workflowStatus": "ORDERED",
+    "createdAt": "2025-11-08T07:15:25.055Z",
+    "updatedAt": "2025-11-08T07:42:06.005Z"
+  },
+  {
+    "id": "A-2025-11-08T07:15:25.055Z-8",
+    "productId": 8,
+    "sku": "P-100",
+    "productName": "Eco Detergent",
+    "reorderPoint": 100,
+    "totalStock": 30,
+    "category": "critical",
+    "recommendedQty": 120,
+    "note": "Raise to ~1.5× RP (150)",
+    "workflowStatus": "RESOLVED",
+    "createdAt": "2025-11-08T07:15:25.055Z",
+    "updatedAt": "2025-11-08T07:17:36.091Z"
+  },
+  {
+    "id": "A-2025-11-08T06:46:29.522Z-7",
+    "productId": 7,
+    "sku": "P-200",
+    "productName": "Recycled Paper Pack",
+    "reorderPoint": 200,
+    "totalStock": 0,
+    "category": "critical",
+    "recommendedQty": 300,
+    "note": "Raise to ~1.5× RP (300)",
+    "workflowStatus": "RESOLVED",
+    "createdAt": "2025-11-08T06:46:29.522Z",
+    "updatedAt": "2025-11-08T06:46:51.832Z"
+  },
+  {
+    "id": "A-2025-11-08T06:46:29.522Z-6",
+    "productId": 6,
+    "sku": "P-100",
+    "productName": "Eco-Friendly Detergent",
+    "reorderPoint": 100,
+    "totalStock": 0,
+    "category": "critical",
+    "recommendedQty": 150,
+    "note": "Raise to ~1.5× RP (150)",
+    "workflowStatus": "RESOLVED",
+    "createdAt": "2025-11-08T06:46:29.522Z",
+    "updatedAt": "2025-11-08T06:48:15.655Z"
+  }
+]

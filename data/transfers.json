@@ -1,0 +1,20 @@
+[
+  {
+    "id": "T-20251108-0002",
+    "productId": 5,
+    "fromWarehouseId": 2,
+    "toWarehouseId": 4,
+    "quantity": 23,
+    "createdAt": "2025-11-08T07:41:34.603Z",
+    "status": "COMPLETED"
+  },
+  {
+    "id": "T-20251108-0001",
+    "productId": 3,
+    "fromWarehouseId": 2,
+    "toWarehouseId": 3,
+    "quantity": 4,
+    "createdAt": "2025-11-08T06:18:39.934Z",
+    "status": "COMPLETED"
+  }
+]
