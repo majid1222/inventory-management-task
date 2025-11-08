@@ -1,24 +1,79 @@
-# Multi-Warehouse Inventory Management System
+# Implementation Summary
 
-A compact inventory management demo built with Next.js and Material‑UI (MUI).  
-Implements a redesigned responsive dashboard, a stock transfer workflow with validation and history, and a low‑stock alert & reorder system with recommendations and workflow tracking.
+**Name:** Majid  
+**Completion time:** 2025-11-08 13:30 (IRST)
 
 ---
 
-## Quick start
+## Features completed
+- Redesigned responsive Dashboard (KPI cards, inventory overview, warehouse stock chart)  
+- Stock Transfer System with validation, persistence and history (API + UI; updates data/stock.json and data/transfers.json)  
+- Low Stock Alert & Reorder System (alerts generation, categories: critical/low/adequate/overstocked, recommendations, workflow: NEW → ACKNOWLEDGED → ORDERED → RESOLVED; persisted in data/alerts.json)
 
-Prerequisites
-- Node.js 16+ (18+ recommended)
-- npm
+---
 
-Run locally
-```bash
-git clone (https://github.com/majid1222/inventory-management-task)
-cd <your-repo-folder>
-npm install
-npm run dev
-# open http://localhost:3000
-```
+## Key technical decisions
+- Centralized business logic in lib/data.js to serve both API routes and page UIs (single source of truth for load/save, transfers, alerts, derived metrics).  
+- JSON files for persistence (data/*.json) to keep the demo self-contained and easy to review.  
+- Material UI (MUI) for responsive components and layout; Recharts for visualizations.  
+- Defensive API and client patterns: API routes normalize outputs (always return arrays where expected) and client code guards with Array.isArray to prevent runtime .map errors.  
+- Simple, deterministic IDs (timestamp-based) for records to keep the demo simple and traceable.
+
+---
+
+## Known limitations
+- JSON persistence is not safe for concurrent writes and not production-grade; requires migration to a transactional DB for real deployments.  
+- No authentication or role-based access control.  
+- No automated tests (unit/E2E) or CI pipeline included.  
+- Alerts generation is synchronous/on-demand (no background worker or notification delivery).  
+- Date-based IDs are simple and could collide under extreme rapid writes; use UUIDs in production.
+
+---
+
+## Testing instructions
+1. Clone repository and install:
+   ```
+   git clone <your-repo-url>
+   cd <your-repo-folder>
+   npm install
+   npm run dev
+   ```
+2. Open app: http://localhost:3000
+3. Verify pages:
+   - `/` — Dashboard: check KPI cards, warehouse chart, inventory list. Resize browser to confirm responsiveness.
+   - `/transfers` — Submit a transfer (valid case) and verify:
+     - Source stock decreases, destination stock increases (check data/stock.json).
+     - Transfer appears in history (data/transfers.json).
+   - Transfer error cases to test:
+     - Quantity > available stock → validation error.
+     - From and to warehouse are the same → validation error.
+     - Quantity ≤ 0 → validation error.
+   - `/alerts` — Trigger or refresh alerts:
+     - NEW alerts appear for low/critical products with recommended reorder quantities.
+     - Use workflow actions: ACKNOWLEDGE → ORDER → RESOLVE.
+     - Simulate replenishment by editing `data/stock.json`, then refresh `/alerts` to confirm auto-resolve.
+4. API sanity checks (optional):
+   - GET `/api/products`, `/api/warehouses`, `/api/stock`, `/api/transfers`, `/api/alerts` — confirm responses and array shapes.
+   - POST `/api/transfers/create` — test programmatic transfer creation.
+
+---
+
+## Video walkthrough link
+- Upload a 5–10 minute unlisted video (YouTube or Loom) covering:
+  - Feature demo (dashboard responsiveness, transfer success + error, alerts workflow)  
+  - Code explanation (key decisions, challenges, file highlights)  
+  - Short reflection (proud points, limitations, next steps)  
+- Paste your video URL here once uploaded:  
+  Video link: [paste your unlisted video URL here]
+
+---
+
+## New dependencies added
+- @mui/material  
+- @mui/icons-material  
+- @emotion/react  
+- @emotion/styled  
+- recharts
 
 ---
 
@@ -80,101 +135,4 @@ npm run dev
 API sanity checks
 - Confirm endpoints return arrays where expected: `/api/products`, `/api/warehouses`, `/api/stock`, `/api/transfers`, `/api/alerts`.
 
----
-
-## Code Explanation (3–4 minutes) — notes for the video
-
-Key technical decisions and approach
-- Centralized business logic in `lib/data.js` so APIs and pages reuse the same authoritative functions (`load/save`, `performStockTransfer`, `generateAlerts`, `updateAlertStatus`, derived metrics).
-- JSON file persistence to keep the demo self‑contained and easy to evaluate; tradeoff: not concurrent‑safe — recommend a DB (Postgres/Mongo) for production.
-- Material‑UI for fast, accessible responsive UI; Recharts for charts.
-- Defensive APIs and client code: always normalize responses (Array.isArray checks) to prevent runtime `.map` failures.
-
-Most challenging aspects and solutions
-- Maintaining data integrity when updating stock and recording transfers: apply stock changes first and persist them before appending transfer history to ensure consistency.
-- Alerts lifecycle and auto‑resolve logic: `generateAlerts()` refreshes categories and updates workflow statuses cleanly.
-- Responsive inventory layout: used `TableContainer` with horizontal scroll and provided a card/grid alternative to avoid layout breakage on small screens.
-
-Code structure highlights
-- `lib/data.js` — single source of truth for data operations and business rules
-- `pages/api/*` — thin wrappers calling `lib` functions and returning normalized JSON
-- `pages/index.js`, `pages/transfers.js`, `pages/alerts.js` — UI pages with defensive fetch and clear user feedback
-- `data/*.json` — persistent storage files; ensure they exist and start as arrays (even empty `[]`)  
-
-Record the 3–4 minute section showing these points and open the key files while narrating.
-
----
-
-## Reflection (1–2 minutes) — notes for the video
-
-What I'm proud of
-- Clear separation of UI and business logic (`lib/data.js`) so flows are easy to reason about and test.
-- Defensive coding to avoid common runtime crashes (e.g., ensuring API returns arrays).
-- A compact, usable workflow for transfers and alerts that demonstrates business value.
-
-Known limitations or trade‑offs
-- JSON persistence is not suitable for concurrent access or production workloads.
-- No authentication/authorization layer.
-- No automated tests; alerts are generated on demand rather than by a background worker.
-
-What I'd improve with more time
-- Replace JSON files with a transactional database and migrations.
-- Add role‑based access control and audit logging for transfers and alerts.
-- Implement a background worker to continuously generate alerts and send notifications (email/SMS).
-- Add unit and E2E tests and CI checks.
-
----
-
-## Dependencies added
-
-Ensure these (or equivalent) are listed in `package.json` if used:
-- @mui/material
-- @mui/icons-material
-- @emotion/react
-- @emotion/styled
-- recharts
-
----
-
-## Implementation summary (completed)
-
-**Name:** Sonny  
-**Completion time:** 2025-11-08 13:25 (UTC+03:30)
-
-### Features completed
-- Task 1: Redesigned responsive Dashboard — KPI cards, Recharts warehouse chart, inventory overview
-- Task 2: Stock Transfer System — API endpoints, validation, persistence (`data/transfers.json`), UI, history
-- Task 3: Low Stock Alert & Reorder System — alerts generation, categories, reorder recommendations, workflow persisted (`data/alerts.json`)
-
-### Key technical decisions
-- Centralized business logic in `lib/data.js` for clarity and reuse
-- JSON files for demo persistence to keep the project self-contained and easy to evaluate
-- Material UI (MUI) for responsive UI components and Recharts for visualizations
-- Defensive API responses and client-side fallbacks (Array checks) to prevent runtime errors
-
-### Known limitations
-- JSON persistence not concurrent-safe; migrate to a DB for production workloads
-- No authentication or role-based permissions
-- No automated tests (unit or E2E)
-- Date-based IDs used for simplicity (consider UUIDs in production)
-
-### Testing instructions
-1. Install and run:
-   ```bash
-   npm install
-   npm run dev
-   ```
-2. Visit:
-   - `/` — Dashboard
-   - `/transfers` — Transfer form and history
-   - `/alerts` — Alerts and workflows
-3. Modify `data/*.json` to simulate scenarios and re-check pages or call API endpoints (e.g., `/api/alerts`) to regenerate alerts.
-
----
-
-## Commits and submission notes
-
-- Keep commits small and descriptive (examples: `feat: dashboard layout`, `fix: transfer validation`, `feat: alerts system`).
-- Verify `data/transfers.json` and `data/alerts.json` exist and are valid arrays (`[]`) to prevent UI runtime errors.
-
----
+--
