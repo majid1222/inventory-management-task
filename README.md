@@ -59,12 +59,11 @@
 ---
 
 ## Video walkthrough link
-- Upload a 5–10 minute unlisted video (YouTube or Loom) covering:
+
   - Feature demo (dashboard responsiveness, transfer success + error, alerts workflow)  
   - Code explanation (key decisions, challenges, file highlights)  
   - Short reflection (proud points, limitations, next steps)  
-- Paste your video URL here once uploaded:  
-  Video link: [paste your unlisted video URL here]
+  Video link: https://youtu.be/tamgdTdQ23o
 
 ---
 
